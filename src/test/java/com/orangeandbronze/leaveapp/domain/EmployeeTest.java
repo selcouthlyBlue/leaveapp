@@ -24,9 +24,7 @@ public class EmployeeTest {
 		admin = new Employee();
 		Calendar startDate = new GregorianCalendar(2016,11,5);
 		Calendar endDate = new GregorianCalendar(2016,11,12);
-		LeaveType leaveType = LeaveType.SICK_LEAVE;
-		leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.PENDING);
-		newLeaveApplication = filer.fileLeave(startDate, endDate, leaveType);
+		newLeaveApplication = filer.fileLeave(startDate, endDate, LeaveType.SICK_LEAVE);
 	}
 
 	@Test
