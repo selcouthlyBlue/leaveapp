@@ -13,9 +13,9 @@ public class LeaveApplicationTest {
 	public void leaveApplicationWithEndDateBeforeStartDateRaisesAnException() {
 		Calendar startDate = new GregorianCalendar(2016,11,12);
 		Calendar endDate = new GregorianCalendar(2016,11,5);
-		LeaveType leaveType = LeaveType.SL;
+		LeaveType leaveType = LeaveType.SICK_LEAVE;
 		try {
-			new LeaveApplication(startDate, endDate, leaveType);
+			new LeaveApplication(startDate, endDate, leaveType, new Employee(), new Employee());
 			fail("Instantiating a LeaveApplication object should "
 					+ "throw an exception if the end date "
 					+ "is before start date.");

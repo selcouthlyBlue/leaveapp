@@ -10,9 +10,11 @@ public class Employee {
 	private float sickLeaveCredits;
 	private float vacationLeaveCredits;
 	private float emergencyLeaveCredits;
+	private float offsetCredits;
+	
 
-	public LeaveApplication fileLeave(Calendar startDate, Calendar endDate, LeaveType leaveType) {
-		LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, leaveType);
+	public LeaveApplication fileLeave(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee approver) {
+		LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, leaveType, this, approver);
 		leavehistory.add(leaveApplication);
 		return leaveApplication;
 	}
