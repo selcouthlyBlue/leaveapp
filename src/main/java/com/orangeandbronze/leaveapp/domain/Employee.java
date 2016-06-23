@@ -23,10 +23,6 @@ public class Employee {
 		return leaveApplication;
 	}
 
-	public Collection<LeaveApplication> getLeaveHistory() {
-		return new HashSet<LeaveApplication>(leavehistory);
-	}
-
 	public void cancel(LeaveApplication leaveApplication) {
 		leaveApplication.cancel();
 	}
@@ -147,5 +143,9 @@ public class Employee {
 	
 	private void awardLWOPPoints(float negativeLeaveCredits) {	
 		lwopPoints += Math.abs(negativeLeaveCredits);
+	}
+
+	public boolean hasInLeaveHistoryA(LeaveApplication newLeaveApplication) {
+		return leavehistory.contains(newLeaveApplication);
 	}
 }

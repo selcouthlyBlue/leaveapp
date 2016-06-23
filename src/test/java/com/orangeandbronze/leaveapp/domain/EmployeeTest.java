@@ -21,20 +21,22 @@ public class EmployeeTest {
 	
 	@Before
 	public void setUp() {
-		employee = new Employee();
-		supervisor = new Employee();
-		admin = new Employee();
+		employee = generateEmployee();
+		supervisor = generateEmployee();
+		admin = generateEmployee();
 		startDate = new GregorianCalendar(2016,11,5);
 		endDate = new GregorianCalendar(2016,11,12);
 		newLeaveApplication = employee.fileLeave(startDate, endDate, LeaveType.SICK_LEAVE, supervisor);
 	}
 
+	private Employee generateEmployee() {
+		return new Employee();
+	}
+
 	@Test
 	public void employeeFilesALeave() {
-		assertTrue((float) 8 == newLeaveApplication.getNumberOfLeaveDays());
-		assertTrue("Leave of filer should appear "
-				+ "in leave employee's leave history.", 
-				employee.getLeaveHistory().contains(newLeaveApplication));
+		assertTrue("Employee's leave history should be updated upon filing a leave.", 
+				employee.hasInLeaveHistoryA(newLeaveApplication));
 	}
 	
 	@Test
