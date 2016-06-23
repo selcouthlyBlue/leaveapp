@@ -6,11 +6,12 @@ public class LeaveApplication {
 
 	private Calendar startDate;
 	private Calendar endDate;
-	private LeaveType leavetype;
+	private LeaveType leaveType;
 	private LeaveStatus leaveStatus;
 	private Employee filer;
 	private Employee approver;
 	private String reason;
+	private float numberOfLeaveDays;
 	
 	public LeaveApplication(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee filer, Employee approver) {
 		this(startDate, endDate, leaveType, LeaveStatus.PENDING, filer, approver);
@@ -20,12 +21,21 @@ public class LeaveApplication {
 		checkIfEndDateIsBeforeStartDate(startDate, endDate);
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.leavetype = leaveType;
+		this.leaveType = leaveType;
 		this.leaveStatus = leaveStatus;
 		this.filer = filer;
 		this.approver = approver;
+		numberOfLeaveDays = countNumberOfLeaveDays(startDate, endDate);
 	}
 	
+	private float countNumberOfLeaveDays(Calendar startDate, Calendar endDate) {
+		int numberOfLeaveDays = 1;
+		for(Calendar date = startDate; date.before(endDate); date.add(Calendar.DATE, 1)) {
+			numberOfLeaveDays++;
+		}
+		return (float) numberOfLeaveDays;
+	}
+
 	private void checkIfEndDateIsBeforeStartDate(Calendar startDate, Calendar endDate) {
 		if(endDate.before(startDate))
 			throw new IllegalArgumentException(endDate + " is before " + startDate);
@@ -38,8 +48,10 @@ public class LeaveApplication {
 	public void approve() {
 		if(this.leaveStatus == LeaveStatus.PENDING)
 			this.leaveStatus = LeaveStatus.SUPERVISOR_APPROVED;
-		else if(this.leaveStatus == LeaveStatus.SUPERVISOR_APPROVED) 
+		else if(this.leaveStatus == LeaveStatus.SUPERVISOR_APPROVED) {
 			this.leaveStatus = LeaveStatus.ADMIN_APPROVED;
+			filer.deductLeaveCredits(numberOfLeaveDays, leaveType);
+		}
 	}
 
 	public void disapprove() {
@@ -55,5 +67,9 @@ public class LeaveApplication {
 
 	public void changeToNotTaken() {
 		leaveStatus = LeaveStatus.NOT_TAKEN;
+	}
+
+	public float getNumberOfLeaveDays() {
+		return numberOfLeaveDays;
 	}
 }

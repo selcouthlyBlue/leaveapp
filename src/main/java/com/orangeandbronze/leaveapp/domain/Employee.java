@@ -6,13 +6,17 @@ import java.util.HashSet;
 
 public class Employee {
 	
-	private Collection<LeaveApplication> leavehistory = new HashSet<LeaveApplication>();
+	private String firstName;
+	private String lastName;
+	private Calendar employmentDate;
+	private EmploymentStatus employmentStatus;
 	private float sickLeaveCredits;
 	private float vacationLeaveCredits;
 	private float emergencyLeaveCredits;
 	private float offsetLeaveCredits;
+	private float lwopPoints;
+	private Collection<LeaveApplication> leavehistory = new HashSet<LeaveApplication>();
 	
-
 	public LeaveApplication fileLeave(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee approver) {
 		LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, leaveType, this, approver);
 		leavehistory.add(leaveApplication);
@@ -108,5 +112,41 @@ public class Employee {
 	public float getOffsetLeaveCredits() {
 		return offsetLeaveCredits;
 	}
+
+	public void deductLeaveCredits(float numberOfLeaveDays, LeaveType leaveType) {
+		if(leaveType == LeaveType.SICK_LEAVE)
+			decuctSickLeaveCredits(numberOfLeaveDays);
+		if(leaveType == LeaveType.VACATION_LEAVE)
+			deductVacationLeaveCredits(numberOfLeaveDays);
+		if(leaveType == LeaveType.EMERGENCY_LEAVE)
+			deductEmergencyLeaveCredits(numberOfLeaveDays);
+	}
 	
+	private void decuctSickLeaveCredits(float numberOfLeaveDays) {
+		sickLeaveCredits -= numberOfLeaveDays;
+		if(sickLeaveCredits < 0){
+			awardLWOPPoints(sickLeaveCredits);
+			sickLeaveCredits = 0;
+		}
+	}
+	
+	private void deductVacationLeaveCredits(float numberOfLeaveDays) {
+		vacationLeaveCredits -= numberOfLeaveDays;
+		if(vacationLeaveCredits < 0){
+			awardLWOPPoints(vacationLeaveCredits);
+			vacationLeaveCredits = 0;
+		}
+	}
+	
+	private void deductEmergencyLeaveCredits(float numberOfLeaveDays) {
+		emergencyLeaveCredits -= numberOfLeaveDays;
+		if(emergencyLeaveCredits < 0){
+			awardLWOPPoints(emergencyLeaveCredits);
+			emergencyLeaveCredits = 0;
+		}
+	}
+	
+	private void awardLWOPPoints(float negativeLeaveCredits) {	
+		lwopPoints += Math.abs(negativeLeaveCredits);
+	}
 }

@@ -31,6 +31,7 @@ public class EmployeeTest {
 
 	@Test
 	public void employeeFilesALeave() {
+		assertTrue((float) 8 == newLeaveApplication.getNumberOfLeaveDays());
 		assertTrue("Leave of filer should appear "
 				+ "in leave employee's leave history.", 
 				employee.getLeaveHistory().contains(newLeaveApplication));
@@ -126,5 +127,4 @@ public class EmployeeTest {
 		 admin.awardOffsetLeaveCreditsTo(employee, (float) 1.5);
 		 assertTrue(1.5 == employee.getOffsetLeaveCredits());
 	 }
-
 }
