@@ -71,11 +71,10 @@ public class Employee {
 	}
 	
 	private void gainSickLeaveCredits() {
+		sickLeaveCredits += 1.25;
 		if(isGreaterThanMaxCredits(sickLeaveCredits, LeaveType.SICK_LEAVE)) {
 			sickLeaveCredits = LeaveType.SICK_LEAVE.getMaxValue();
-			return;
 		}
-		sickLeaveCredits += 1.25;
 	}
 	
 	private void gainVacationLeaveCredits() {
