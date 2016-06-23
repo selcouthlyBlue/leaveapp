@@ -11,7 +11,6 @@ public class LeaveApplication {
 	private Employee filer;
 	private Employee approver;
 	private String reason;
-	private float numberOfLeaveDays;
 	
 	public LeaveApplication(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee filer, Employee approver) {
 		this(startDate, endDate, leaveType, LeaveStatus.PENDING, filer, approver);
@@ -25,23 +24,12 @@ public class LeaveApplication {
 		this.leaveStatus = leaveStatus;
 		this.filer = filer;
 		this.approver = approver;
-		numberOfLeaveDays = computeNumberOfLeaveDays(startDate, endDate);
-	}
-	
-	private float computeNumberOfLeaveDays(Calendar startDate, Calendar endDate) {
-		int numberOfLeaveDays = 0;
-		for(Calendar date = startDate; date.before(endDate); date.add(Calendar.DATE,1)) {
-			numberOfLeaveDays++;
-		} 
-		System.out.println(numberOfLeaveDays);
-		return (float) numberOfLeaveDays;
 	}
 	
 	private void checkIfEndDateIsBeforeStartDate(Calendar startDate, Calendar endDate) {
 		if(endDate.before(startDate))
 			throw new IllegalArgumentException(endDate + " is before " + startDate);
 	}
-	
 
 	public void cancel() {
 		this.leaveStatus = LeaveStatus.CANCELLED;
@@ -63,10 +51,6 @@ public class LeaveApplication {
 	
 	public LeaveStatus getStatus() {
 		return leaveStatus;
-	}
-	
-	public float getNumberOfLeaveDays() {
-		return numberOfLeaveDays;
 	}
 
 	public void changeToNotTaken() {
