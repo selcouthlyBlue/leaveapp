@@ -10,6 +10,7 @@ public class LeaveApplication {
 	private LeaveStatus leaveStatus;
 	private Employee filer;
 	private Employee approver;
+	private String reason;
 	
 	public LeaveApplication(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee filer, Employee approver) {
 		this(startDate, endDate, leaveType, LeaveStatus.PENDING, filer, approver);
@@ -37,7 +38,7 @@ public class LeaveApplication {
 	public void approve() {
 		if(this.leaveStatus == LeaveStatus.PENDING)
 			this.leaveStatus = LeaveStatus.SUPERVISOR_APPROVED;
-		else if(this.leaveStatus == LeaveStatus.SUPERVISOR_APPROVED)
+		else if(this.leaveStatus == LeaveStatus.SUPERVISOR_APPROVED) 
 			this.leaveStatus = LeaveStatus.ADMIN_APPROVED;
 	}
 

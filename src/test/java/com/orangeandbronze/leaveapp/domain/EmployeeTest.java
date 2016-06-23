@@ -133,5 +133,13 @@ public class EmployeeTest {
 		 assertTrue(15.0 == filer.getVacationLeaveCredits());
 		 assertTrue(3.0 == filer.getEmergencyLeaveCredits());
 	 }
+	 
+	 @Test
+	 public void changeOffsetCreditsOfEmployeeByAdmin() {
+		 admin.resetOffsetLeaveCredits(filer, (float) 1.5);
+		 
+		 assertTrue(0 == admin.getOffsetLeaveCredits());
+		 assertTrue(1.5 == filer.getOffsetLeaveCredits());
+	 }
 
 }
