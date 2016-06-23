@@ -19,15 +19,12 @@ public class Employee {
 		return leaveApplication;
 	}
 
-	public Collection<LeaveApplication> getLeaveHistory() {
-		return new HashSet<LeaveApplication>(leavehistory);
-	}
-
 	public void cancel(LeaveApplication leaveApplication) {
 		leaveApplication.cancel();
 	}
 
 	public void approve(LeaveApplication leaveApplication) {
+		
 		leaveApplication.approve();
 	}
 
@@ -39,37 +36,20 @@ public class Employee {
 		leaveApplication.changeToNotTaken();
 	}
 	
-	public void resetLeaveCredits() {
-		resetSickLeaveCredits();
-		resetVacationLeaveCredits();
-		resetEmergencyLeaveCredits();
-	}
-	
-	private void resetSickLeaveCredits() {
+	public void resetSLAndVLCredits() {
 		sickLeaveCredits = (float) 3.75;
-	}
-	
-	private void resetVacationLeaveCredits() {
 		vacationLeaveCredits = (float) 3.75;
 	}
 	
-	private void resetEmergencyLeaveCredits() {
+	public void resetEmergencyLeaveCredits() {
 		emergencyLeaveCredits = (float) 3;
 	}
-	
-	public float getSickLeaveCredits() {
-		return sickLeaveCredits;
-	}
-	
-	public float getVacationLeaveCredits() {
-		return vacationLeaveCredits;
-	}
-	
+
 	public float getEmergencyLeaveCredits() {
 		return emergencyLeaveCredits;
 	}
 	
-	public void gainLeavePoints(){
+	public void gainSickLeaveCreditsAndVactionLeaveCredits(){
 		gainSickLeaveCredits();
 		gainVacationLeaveCredits();
 	}
@@ -104,13 +84,25 @@ public class Employee {
 	public void setEmergencyLeaveCredits(float emergencyLeaveCredits) {
 		this.emergencyLeaveCredits = emergencyLeaveCredits;
 	}
-	
-	public void resetOffsetLeaveCredits(Employee employee, float offsetLeaveCredits) {
+
+	public void awardOffsetLeaveCreditsTo(Employee employee, float offsetLeaveCredits) {
 		employee.setOffsetLeaveCredits(offsetLeaveCredits);
 	}
-
+	
 	private void setOffsetLeaveCredits(float offsetLeaveCredits) {
 		this.offsetLeaveCredits = offsetLeaveCredits;
+	}
+
+	public Collection<LeaveApplication> getLeaveHistory() {
+		return new HashSet<LeaveApplication>(leavehistory);
+	}
+
+	public float getSickLeaveCredits() {
+		return sickLeaveCredits;
+	}
+
+	public float getVacationLeaveCredits() {
+		return vacationLeaveCredits;
 	}
 
 	public float getOffsetLeaveCredits() {
