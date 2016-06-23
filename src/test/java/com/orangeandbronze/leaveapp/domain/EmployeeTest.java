@@ -16,15 +16,17 @@ public class EmployeeTest {
 	private Employee admin;
 	private LeaveApplication leaveApplication; 
 	private LeaveApplication newLeaveApplication;
+	private Calendar startDate;
+	private Calendar endDate;
 	
 	@Before
 	public void setUp() {
 		filer = new Employee();
 		supervisor = new Employee();
 		admin = new Employee();
-		Calendar startDate = new GregorianCalendar(2016,11,5);
-		Calendar endDate = new GregorianCalendar(2016,11,12);
-		newLeaveApplication = filer.fileLeave(startDate, endDate, LeaveType.SICK_LEAVE);
+		startDate = new GregorianCalendar(2016,11,5);
+		endDate = new GregorianCalendar(2016,11,12);
+		newLeaveApplication = filer.fileLeave(startDate, endDate, LeaveType.SICK_LEAVE, supervisor);
 	}
 
 	@Test
@@ -65,10 +67,7 @@ public class EmployeeTest {
 	
 	 @Test
 	 public void approveLeaveApplicationBySupervisor() {
-		 GregorianCalendar startDate = new GregorianCalendar(2015, 1, 6);
-		 GregorianCalendar endDate = new GregorianCalendar(2015, 1, 8);
-		 Employee supervisor = new Employee();
-		 LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.PENDING);
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.PENDING, filer, supervisor);
 		 supervisor.approve(leaveApplication);
 		 
 		 assertEquals(LeaveStatus.SUPERVISOR_APPROVED, leaveApplication.getStatus());
@@ -76,10 +75,7 @@ public class EmployeeTest {
 	 
 	 @Test
 	 public void approveLeaveApplicationByAdmin() {
-		 GregorianCalendar startDate = new GregorianCalendar(2015, 1, 6);
-		 GregorianCalendar endDate = new GregorianCalendar(2015, 1, 8);
-		 Employee admin = new Employee();
-		 LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.SUPERVISOR_APPROVED);
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.SUPERVISOR_APPROVED, filer, supervisor);
 		 admin.approve(leaveApplication);
 		 
 		 assertEquals(LeaveStatus.ADMIN_APPROVED, leaveApplication.getStatus());
@@ -87,10 +83,7 @@ public class EmployeeTest {
 	 
 	 @Test
 	 public void disapproveLeaveApplicationBySupervisor() {
-		 GregorianCalendar startDate = new GregorianCalendar(2015, 1, 6);
-		 GregorianCalendar endDate = new GregorianCalendar(2015, 1, 8);
-		 Employee supervisor = new Employee();
-		 LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.PENDING);
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.PENDING, filer, supervisor);
 		 supervisor.disapprove(leaveApplication);
 		 
 		 assertEquals(LeaveStatus.SUPERVISOR_DISAPPROVED, leaveApplication.getStatus());
@@ -98,10 +91,7 @@ public class EmployeeTest {
 	 
 	 @Test
 	 public void disapproveLeaveApplicationByAdmin() {
-		 GregorianCalendar startDate = new GregorianCalendar(2015, 1, 6);
-		 GregorianCalendar endDate = new GregorianCalendar(2015, 1, 8);
-		 Employee admin = new Employee();
-		 LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.SUPERVISOR_APPROVED);
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.SUPERVISOR_APPROVED, filer, supervisor);
 		 admin.disapprove(leaveApplication);
 		 
 		 assertEquals(LeaveStatus.ADMIN_DISAPPROVED, leaveApplication.getStatus());
@@ -109,10 +99,7 @@ public class EmployeeTest {
 	 
 	 @Test
 	 public void changeLeaveApplicationToNotTakenByAdmin() {
-		 GregorianCalendar startDate = new GregorianCalendar(2015, 1, 6);
-		 GregorianCalendar endDate = new GregorianCalendar(2015, 1, 8);
-		 Employee admin = new Employee();
-		 LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.ADMIN_APPROVED);
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.ADMIN_APPROVED, filer, supervisor);
 		 admin.changeToNotTaken(leaveApplication);
 		 
 		 assertEquals(LeaveStatus.NOT_TAKEN, leaveApplication.getStatus());
@@ -120,34 +107,39 @@ public class EmployeeTest {
 	 
 	 @Test
 	 public void resetLeavePointsToZero() {
-		 Employee regular = new Employee();
-		 regular.resetLeaveCredits();
+		 filer.resetLeaveCredits();
 		 
-		 assertTrue(3.75 == regular.getSickLeaveCredits());
-		 assertTrue(3.75 == regular.getVacationLeaveCredits());
-		 assertTrue(3.00 == regular.getEmergencyLeaveCredits());
+		 assertTrue(3.75 == filer.getSickLeaveCredits());
+		 assertTrue(3.75 == filer.getVacationLeaveCredits());
+		 assertTrue(3.00 == filer.getEmergencyLeaveCredits());
 	 }
 	 
 	 @Test
 	 public void incrementLeavePointOfEmployee() {
-		 Employee regular = new Employee();
-		 regular.gainLeavePoints();
+		 filer.gainLeavePoints();
 
-		 assertTrue(1.25 == regular.getSickLeaveCredits());
-		 assertTrue(1.25 == regular.getVacationLeaveCredits());
+		 assertTrue(1.25 == filer.getSickLeaveCredits());
+		 assertTrue(1.25 == filer.getVacationLeaveCredits());
 	 }
 	 
 	 @Test
 	 public void incrementLeavePointOfEmployeeButHasReachedMaximum() {
-		 Employee regular = new Employee();
-		 regular.setSickLeaveCredits(LeaveType.SICK_LEAVE.getMaxValue());
-		 regular.setEmergencyLeaveCredits(LeaveType.EMERGENCY_LEAVE.getMaxValue());
-		 regular.setVacationLeaveCredits(LeaveType.VACATION_LEAVE.getMaxValue());
-		 regular.gainLeavePoints();
+		 filer.setSickLeaveCredits(LeaveType.SICK_LEAVE.getMaxValue());
+		 filer.setEmergencyLeaveCredits(LeaveType.EMERGENCY_LEAVE.getMaxValue());
+		 filer.setVacationLeaveCredits(LeaveType.VACATION_LEAVE.getMaxValue());
+		 filer.gainLeavePoints();
 		 
-		 assertTrue(15.0 == regular.getSickLeaveCredits());
-		 assertTrue(15.0 == regular.getVacationLeaveCredits());
-		 assertTrue(3.0 == regular.getEmergencyLeaveCredits());
+		 assertTrue(15.0 == filer.getSickLeaveCredits());
+		 assertTrue(15.0 == filer.getVacationLeaveCredits());
+		 assertTrue(3.0 == filer.getEmergencyLeaveCredits());
+	 }
+	 
+	 @Test
+	 public void changeOffsetCreditsOfEmployeeByAdmin() {
+		 admin.resetOffsetLeaveCredits(filer, (float) 1.5);
+		 
+		 assertTrue(0 == admin.getOffsetLeaveCredits());
+		 assertTrue(1.5 == filer.getOffsetLeaveCredits());
 	 }
 
 }

@@ -10,9 +10,11 @@ public class Employee {
 	private float sickLeaveCredits;
 	private float vacationLeaveCredits;
 	private float emergencyLeaveCredits;
+	private float offsetLeaveCredits;
+	
 
-	public LeaveApplication fileLeave(Calendar startDate, Calendar endDate, LeaveType leaveType) {
-		LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, leaveType);
+	public LeaveApplication fileLeave(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee approver) {
+		LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, leaveType, this, approver);
 		leavehistory.add(leaveApplication);
 		return leaveApplication;
 	}
@@ -103,5 +105,16 @@ public class Employee {
 		this.emergencyLeaveCredits = emergencyLeaveCredits;
 	}
 	
+	public void resetOffsetLeaveCredits(Employee employee, float offsetLeaveCredits) {
+		employee.setOffsetLeaveCredits(offsetLeaveCredits);
+	}
 
+	private void setOffsetLeaveCredits(float offsetLeaveCredits) {
+		this.offsetLeaveCredits = offsetLeaveCredits;
+	}
+
+	public float getOffsetLeaveCredits() {
+		return offsetLeaveCredits;
+	}
+	
 }
