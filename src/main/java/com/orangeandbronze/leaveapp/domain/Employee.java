@@ -40,17 +40,9 @@ public class Employee {
 	}
 	
 	public void resetLeaveCredits() {
-		resetSickLeaveCredits();
-		resetVacationLeaveCredits();
-		resetEmergencyLeaveCredits();
-	}
-	
-	private void resetSickLeaveCredits() {
 		sickLeaveCredits = (float) 3.75;
-	}
-	
-	private void resetVacationLeaveCredits() {
 		vacationLeaveCredits = (float) 3.75;
+		resetEmergencyLeaveCredits();
 	}
 	
 	private void resetEmergencyLeaveCredits() {
@@ -69,7 +61,7 @@ public class Employee {
 		return emergencyLeaveCredits;
 	}
 	
-	public void gainLeavePoints(){
+	public void gainSickLeaveCreditsAndVactionLeaveCredits(){
 		gainSickLeaveCredits();
 		gainVacationLeaveCredits();
 	}
@@ -105,7 +97,7 @@ public class Employee {
 		this.emergencyLeaveCredits = emergencyLeaveCredits;
 	}
 	
-	public void resetOffsetLeaveCredits(Employee employee, float offsetLeaveCredits) {
+	public void awardOffsetLeaveCreditsTo(Employee employee, float offsetLeaveCredits) {
 		employee.setOffsetLeaveCredits(offsetLeaveCredits);
 	}
 
