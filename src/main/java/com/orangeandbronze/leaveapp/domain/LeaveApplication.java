@@ -11,7 +11,7 @@ public class LeaveApplication {
 	private Employee filer;
 	private Employee approver;
 	private String reason;
-	private float numberOfLeaveDays;
+	private int numberOfLeaveDays;
 	
 	public LeaveApplication(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee filer, Employee approver) {
 		this(startDate, endDate, leaveType, LeaveStatus.PENDING, filer, approver);
@@ -28,12 +28,21 @@ public class LeaveApplication {
 		numberOfLeaveDays = countNumberOfLeaveDays(startDate, endDate);
 	}
 	
-	private float countNumberOfLeaveDays(Calendar startDate, Calendar endDate) {
+	private int countNumberOfLeaveDays(Calendar startDate, Calendar endDate) {
 		int numberOfLeaveDays = 1;
 		for(Calendar date = startDate; date.before(endDate); date.add(Calendar.DATE, 1)) {
-			numberOfLeaveDays++;
+			if(!isWeekEnd(getDayOfWeek(date)))
+				numberOfLeaveDays++;
 		}
-		return (float) numberOfLeaveDays;
+		return numberOfLeaveDays;
+	}
+
+	private int getDayOfWeek(Calendar date) {
+		return date.get(Calendar.DAY_OF_WEEK);
+	}
+
+	private boolean isWeekEnd(int dayOfWeek) {
+		return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
 	}
 
 	private void checkIfEndDateIsBeforeStartDate(Calendar startDate, Calendar endDate) {
