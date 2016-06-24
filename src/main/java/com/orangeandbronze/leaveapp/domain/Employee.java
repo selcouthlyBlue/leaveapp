@@ -9,7 +9,7 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private Calendar employmentDate;
-	private EmploymentStatus employmentStatus = EmploymentStatus.PROBATIONARY;
+	private EmploymentStatus employmentStatus;
 	private float sickLeaveCredits;
 	private float vacationLeaveCredits;
 	private float emergencyLeaveCredits;
@@ -148,7 +148,19 @@ public class Employee {
 	public boolean hasInLeaveHistoryA(LeaveApplication newLeaveApplication) {
 		return leavehistory.contains(newLeaveApplication);
 	}
-
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public float getLwopPoints() {
+		return lwopPoints;
+	}
+	
 	public void regularize(Employee employee) {
 		employee.employmentStatus = EmploymentStatus.REGULAR;
 	}
