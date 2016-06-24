@@ -31,7 +31,7 @@ public class LeaveApplication {
 	private int countNumberOfLeaveDays(Calendar startDate, Calendar endDate) {
 		int numberOfLeaveDays = 1;
 		for(Calendar date = startDate; date.before(endDate); date.add(Calendar.DATE, 1)) {
-			if(!isWeekEnd(getDayOfWeek(date)))
+			if(!isWeekEnd(getDayOfWeek(date)) && !Holiday.isHoliday(date))
 				numberOfLeaveDays++;
 		}
 		return numberOfLeaveDays;
