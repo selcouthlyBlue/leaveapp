@@ -37,6 +37,14 @@ public class LeaveApplicationTest {
 		leaveApplication = generateLeaveApplication(startDate, endDate);
 		assertGetNumberOfLeaveDaysEvaluatesTo(3);
 	}
+	
+	@Test
+	public void leaveApplicationWithIntervalContainingHolidaysShouldHaveCorrectNumberOfLeaveDays() throws Exception {
+		Calendar startDate = new GregorianCalendar(2016,7,29);
+		Calendar endDate = new GregorianCalendar(2016,7,31);
+		leaveApplication = generateLeaveApplication(startDate, endDate);
+		assertGetNumberOfLeaveDaysEvaluatesTo(2);
+	}
 
 	@Test
 	public void leaveApplicationWithEndDateBeforeStartDateRaisesAnException() {
