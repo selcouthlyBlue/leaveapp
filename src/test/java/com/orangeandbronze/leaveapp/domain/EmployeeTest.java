@@ -1,7 +1,6 @@
 package com.orangeandbronze.leaveapp.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -129,4 +128,15 @@ public class EmployeeTest {
 		 admin.awardOffsetLeaveCreditsTo(employee, (float) 1.5);
 		 assertTrue(1.5 == employee.getOffsetLeaveCredits());
 	 }
+	 
+	 @Test
+	public void aNonRegularEmployeeShouldHaveAProbationaryStatus() throws Exception {
+		assertTrue(employee.getStatus() == EmploymentStatus.PROBATIONARY);
+	}
+	 
+	 @Test
+	public void adminRegularizingAnEmployee() throws Exception {
+		admin.regularize(employee);
+		assertTrue(employee.getStatus() == EmploymentStatus.REGULAR);
+	}
 }
