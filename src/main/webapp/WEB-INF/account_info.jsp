@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="t"%>
-<t:header/>
+<t:wrapper>
 <div class="container-fluid" id="content">
 	<div class="row">
 		<t:menu/>
@@ -25,4 +25,4 @@
 		</div>
 	</div>
 </div>
-<t:footer/>
+</t:wrapper>

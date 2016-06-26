@@ -148,19 +148,7 @@ public class Employee {
 	public boolean hasInLeaveHistoryA(LeaveApplication newLeaveApplication) {
 		return leavehistory.contains(newLeaveApplication);
 	}
-	
-	public String getFirstName() {
-		return firstName;
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
-	
-	public float getLwopPoints() {
-		return lwopPoints;
-	}
-	
+
 	public void regularize(Employee employee) {
 		employee.employmentStatus = EmploymentStatus.REGULAR;
 	}
