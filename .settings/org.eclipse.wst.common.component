@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="leaveapp">
+<<<<<<< HEAD
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+=======
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+>>>>>>> parent of 1d9f109... Added DAO and Services.
         <property name="context-root" value="leaveapp"/>
         <property name="java-output-path" value="/leaveapp/target/classes"/>
     </wb-module>

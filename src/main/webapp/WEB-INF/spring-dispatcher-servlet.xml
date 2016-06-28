@@ -7,6 +7,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
    
  <context:component-scan base-package="com.orangeandbronze.leaveapp.controllers"/>
+   
+ <context:component-scan base-package="leaveapplication"/>
  
  <bean id="viewResolver"
    	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >

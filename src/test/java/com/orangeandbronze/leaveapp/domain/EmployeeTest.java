@@ -1,6 +1,8 @@
 package com.orangeandbronze.leaveapp.domain;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -9,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EmployeeTest {
-
 	private Employee employee;
 	private Employee supervisor;
 	private Employee admin;
@@ -46,17 +47,7 @@ public class EmployeeTest {
 				+ " cancels the leave",
 				newLeaveApplication.getStatus() == LeaveStatus.CANCELLED);
 	}
-
-	@Test
-	public void supervisorApprovesALeaveApplicationOfAnEmployee() 
-			throws Exception {
-		supervisor.approve(newLeaveApplication);
-		assertTrue("Leave Application status should be " 
-				+ LeaveStatus.SUPERVISOR_APPROVED + " when "
-				+ "the supervisor approves the leave.", 
-				newLeaveApplication.getStatus() == LeaveStatus.SUPERVISOR_APPROVED);
-	}
-
+	
 	@Test
 	public void adminApprovesALeaveApplicationApprovedByASupervisor() throws Exception {
 		supervisor.approve(newLeaveApplication);
@@ -116,4 +107,66 @@ public class EmployeeTest {
 		admin.regularize(employee);
 		assertTrue(employee.getStatus() == EmploymentStatus.REGULAR);
 	}
+	
+	 @Test
+	 public void approveLeaveApplicationBySupervisor() {
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.PENDING, employee, supervisor);
+		 supervisor.approve(leaveApplication);
+		 
+		 assertEquals(LeaveStatus.SUPERVISOR_APPROVED, leaveApplication.getStatus());
+	 }
+	 
+	 @Test
+	 public void approveLeaveApplicationByAdmin() {
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.SUPERVISOR_APPROVED, employee, supervisor);
+		 admin.approve(leaveApplication);
+		 
+		 assertEquals(LeaveStatus.ADMIN_APPROVED, leaveApplication.getStatus());
+	 }
+	 
+	 @Test
+	 public void disapproveLeaveApplicationBySupervisor() {
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.PENDING, employee, supervisor);
+		 supervisor.disapprove(leaveApplication);
+		 
+		 assertEquals(LeaveStatus.SUPERVISOR_DISAPPROVED, leaveApplication.getStatus());
+	 }
+	 
+	 @Test
+	 public void disapproveLeaveApplicationByAdmin() {
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.SUPERVISOR_APPROVED, employee, supervisor);
+		 admin.disapprove(leaveApplication);
+		 
+		 assertEquals(LeaveStatus.ADMIN_DISAPPROVED, leaveApplication.getStatus());
+	 }
+	 
+	 @Test
+	 public void changeLeaveApplicationToNotTakenByAdmin() {
+		 leaveApplication = new LeaveApplication(startDate, endDate, LeaveType.SICK_LEAVE, LeaveStatus.ADMIN_APPROVED, employee, supervisor);
+		 admin.changeToNotTaken(leaveApplication);
+		 
+		 assertEquals(LeaveStatus.NOT_TAKEN, leaveApplication.getStatus());
+	 }
+	 
+	 @Test
+	 public void resetLeavePointsToZero() {
+		 employee.resetLeaveCredits();
+		 
+		 assertTrue(3.75 == employee.getSickLeaveCredits());
+		 assertTrue(3.75 == employee.getVacationLeaveCredits());
+		 assertTrue(3.00 == employee.getEmergencyLeaveCredits());
+	 }
+	 
+	 @Test
+	 public void incrementLeavePointOfEmployee() {
+		 employee.gainSickLeaveCreditsAndVactionLeaveCredits();
+		 assertTrue(1.25 == employee.getSickLeaveCredits());
+		 assertTrue(1.25 == employee.getVacationLeaveCredits());
+	 }
+	 
+	 @Test
+	 public void changeOffsetCreditsOfEmployeeByAdmin() {
+		 admin.awardOffsetLeaveCreditsTo(employee, (float) 1.5);
+		 assertTrue(1.5 == employee.getOffsetLeaveCredits());
+	 }
 }
