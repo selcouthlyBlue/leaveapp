@@ -9,12 +9,13 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private Calendar employmentDate;
-	private EmploymentStatus employmentStatus = EmploymentStatus.PROBATIONARY;
+	private EmploymentStatus employmentStatus;
 	private float sickLeaveCredits;
 	private float vacationLeaveCredits;
 	private float emergencyLeaveCredits;
 	private float offsetLeaveCredits;
 	private float lwopPoints;
+	private LeaveCredits leaveCredits;
 	private Collection<LeaveApplication> leavehistory = new HashSet<LeaveApplication>();
 	
 	public LeaveApplication fileLeave(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee approver) {
@@ -25,6 +26,10 @@ public class Employee {
 
 	public void cancel(LeaveApplication leaveApplication) {
 		leaveApplication.cancel();
+	}
+	
+	public void awardLeaveCredits(LeaveType leaveType, float credits){
+		leaveCredits.award(leaveType, credits);
 	}
 	
 	public void resetLeaveCredits() {
