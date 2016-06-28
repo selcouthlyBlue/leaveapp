@@ -146,24 +146,12 @@ public class Employee {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
 	public String getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public float getLwopPoints() {
 		return lwopPoints;
-	}
-
-	public void setLwopPoints(float lwopPoints) {
-		this.lwopPoints = lwopPoints;
 	}
 
 	public void regularize() {
