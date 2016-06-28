@@ -26,18 +26,6 @@ public class Employee {
 	public void cancel(LeaveApplication leaveApplication) {
 		leaveApplication.cancel();
 	}
-
-	public void approve(LeaveApplication leaveApplication) {
-		leaveApplication.approve();
-	}
-
-	public void disapprove(LeaveApplication leaveApplication) {
-		leaveApplication.disapprove();
-	}
-	
-	public void changeToNotTaken(LeaveApplication leaveApplication) {
-		leaveApplication.changeToNotTaken();
-	}
 	
 	public void resetLeaveCredits() {
 		sickLeaveCredits = (float) 3.75;
@@ -149,8 +137,8 @@ public class Employee {
 		return leavehistory.contains(newLeaveApplication);
 	}
 
-	public void regularize(Employee employee) {
-		employee.employmentStatus = EmploymentStatus.REGULAR;
+	public void regularize() {
+		employmentStatus = EmploymentStatus.REGULAR;
 	}
 
 	public EmploymentStatus getStatus() {
