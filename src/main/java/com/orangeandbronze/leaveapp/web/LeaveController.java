@@ -1,4 +1,4 @@
-package com.orangeandbronze.leaveapp.controllers;
+package com.orangeandbronze.leaveapp.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

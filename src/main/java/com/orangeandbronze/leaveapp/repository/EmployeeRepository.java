@@ -1,10 +1,10 @@
-package com.orangeandbronze.leaveapp.dao;
+package com.orangeandbronze.leaveapp.repository;
 
 import java.util.Collection;
 
 import com.orangeandbronze.leaveapp.domain.Employee;
 
-public interface EmployeeDAO {
+public interface EmployeeRepository {
 	
 	public Employee findBy(int employeeId);
 	

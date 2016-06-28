@@ -2,12 +2,12 @@ package com.orangeandbronze.leaveapp.service;
 
 import java.util.Collection;
 
-import com.orangeandbronze.leaveapp.dao.*;
 import com.orangeandbronze.leaveapp.domain.*;
+import com.orangeandbronze.leaveapp.repository.*;
 
 public class EmployeeService {
-	EmployeeDAO employeeDao;
-	LeaveApplicationDAO leaveApplicationDao;
+	EmployeeRepository employeeDao;
+	LeaveApplicationRepository leaveApplicationDao;
 
 	public void fileLeave(int employeeId) {
 		Employee employee = employeeDao.findBy(employeeId);

@@ -1,10 +1,10 @@
-package com.orangeandbronze.leaveapp.dao;
+package com.orangeandbronze.leaveapp.repository;
 
 import java.util.Collection;
 
 import com.orangeandbronze.leaveapp.domain.LeaveApplication;;
 
-public interface LeaveApplicationDAO {
+public interface LeaveApplicationRepository {
 
 	public LeaveApplication findBy(int leaveId);
 	

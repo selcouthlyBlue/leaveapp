@@ -1,4 +1,4 @@
-package com.orangeandbronze.leaveapp.controllers;
+package com.orangeandbronze.leaveapp.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;

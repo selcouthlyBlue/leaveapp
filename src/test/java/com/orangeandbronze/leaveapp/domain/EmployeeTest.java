@@ -11,8 +11,8 @@ import org.junit.Test;
 public class EmployeeTest {
 
 	private Employee employee;
-	private Employee supervisor;
-	private Employee admin;
+	private Supervisor supervisor;
+	private Admin admin;
 	private LeaveApplication leaveApplication; 
 	private LeaveApplication newLeaveApplication;
 	private Calendar startDate;
@@ -20,9 +20,9 @@ public class EmployeeTest {
 
 	@Before
 	public void setUp() {
-		employee = generateEmployee();
-		supervisor = generateEmployee();
-		admin = generateEmployee();
+		employee = new Employee();
+		supervisor = new Supervisor();
+		admin = new Admin();
 		startDate = new GregorianCalendar(2016,11,5);
 		endDate = new GregorianCalendar(2016,11,12);
 		newLeaveApplication = employee.fileLeave(startDate, endDate, LeaveType.SICK_LEAVE, supervisor);
