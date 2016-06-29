@@ -28,10 +28,10 @@
 							<td> Approved </td>
 							<td> Approved </td>
 							<td> Jason Bajade </td>
-							<td> SL </td>
-							<td>  </td>
-							<td>  </td>
-							<td>  </td>
+							<td> ${leaveApplication.leaveType} </td>
+							<td> </td>
+							<td> ${leaveApplication.startDate} </td>
+							<td> ${leaveApplication.endDate} </td>
 							<td>  </td>
 							<td>	<i class="fa fa-eye text-primary" aria-hidden="true"></i>
 										<i class="fa fa-times text-danger" aria-hidden="true"></i> 
