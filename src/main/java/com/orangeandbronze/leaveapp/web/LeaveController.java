@@ -1,5 +1,6 @@
 package com.orangeandbronze.leaveapp.web;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,30 +48,36 @@ public class LeaveController{
 		return model;
 	}
 
-	/*@RequestMapping("/apply_leave")
+	@RequestMapping("/apply_leave")
 	public ModelAndView applyLeave() {
 
 		ModelAndView model = new ModelAndView("apply_leave");
 
 		return model;
-	}*/
-	@RequestMapping(value = "/apply_leave", method = RequestMethod.POST)
-	public String applyLeave(@RequestParam Map<String, String> reqParam, Model model) {
-		Employee employee = employeeRepository.findBy(
-				Integer.parseInt(reqParam.map("employeeId")));
-		Supervisor approver = (Supervisor) employeeRepository.findBy(
-				Integer.parseInt(reqParam.map("approverId")));
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd").parse(string);
+	}
+	@RequestMapping(value = "/submit_leave_application", method = RequestMethod.POST)
+	public String applyLeave(@RequestParam Map<String, String> reqParam, Model model) throws ParseException {
+		//Employee employee = employeeRepository.findBy(
+		//		Integer.parseInt(reqParam.map("employeeId")));
+		//Supervisor approver = (Supervisor) employeeRepository.findBy(
+		//		Integer.parseInt(reqParam.map("approverId")));
+		reqParam.get();
+		Employee employee = new Employee();
+		Supervisor approver = new Supervisor();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MMM-dd");
 		Date start = simpleDateFormat.parse(reqParam.map("startDate"));
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(start);
-		LeaveApplication leaveApplication = employee.fileLeave(startDate, endDate, reqParam.map("approverId"), approver);
-
-		model.addAttribute("employee", employee);
+		Calendar startDate = Calendar.getInstance();
+		startDate.setTime(start);
+		Date end = simpleDateFormat.parse(reqParam.map("startDate"));
+		Calendar endDate = Calendar.getInstance();
+		endDate.setTime(end);
+		//LeaveApplication leaveApplication = employee.fileLeave(startDate, endDate, reqParam.map("approverId"), approver);
+		LeaveType leaveType = LeaveType.EMERGENCY_LEAVE;
+		LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, leaveType, employee, approver);
 		model.addAttribute("leaveApplication", leaveApplication);
+		//model.addAttribute("leaveApplication", leaveApplication);
 
-		return "apply_leave";
+		return "leave_history";
 	}
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
