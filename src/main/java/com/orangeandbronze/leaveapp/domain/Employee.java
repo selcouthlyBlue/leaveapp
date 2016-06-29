@@ -17,6 +17,14 @@ public class Employee {
 	private float lwopPoints;
 	private Collection<LeaveApplication> leavehistory = new HashSet<LeaveApplication>();
 	
+	protected Employee() {
+		
+	}
+	
+	public Employee(String string, String string2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public LeaveApplication fileLeave(Calendar startDate, Calendar endDate, LeaveType leaveType, Employee approver) {
 		LeaveApplication leaveApplication = new LeaveApplication(startDate, endDate, leaveType, this, approver);
 		leavehistory.add(leaveApplication);

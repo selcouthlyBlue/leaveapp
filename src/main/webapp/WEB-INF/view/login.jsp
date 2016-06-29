@@ -28,4 +28,5 @@
 			</div>
 		</div>
 	</div>
-<t:footer/>
+</body>
+</html>
