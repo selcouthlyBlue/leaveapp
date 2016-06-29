@@ -1,6 +1,7 @@
 package com.orangeandbronze.leaveapp.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,12 +16,19 @@ public class EmployeeController{
 		return model;
 	}
 	
-	@RequestMapping("/view_all_employees")
+	/*@RequestMapping("/view_all_employees")
 	public ModelAndView viewAllEmployees() {
 		
 		ModelAndView model = new ModelAndView("employee_list");
 		
 		return model;
-	}
+	}*/
 	
+	@RequestMapping("/view_all_employees")
+	public String viewAllEmployees(Model model) {
+		
+		//ModelAndView model = new ModelAndView("employee_list");
+		
+		return "employee_list";
+	}
 }
